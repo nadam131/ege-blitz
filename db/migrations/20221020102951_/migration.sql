@@ -1,9 +1,16 @@
+-- CreateEnum
+CREATE TYPE "Exam" AS ENUM ('ege', 'oge');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "name" TEXT,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "nickName" TEXT NOT NULL,
+    "age" TEXT NOT NULL,
+    "exam" "Exam" NOT NULL,
     "email" TEXT NOT NULL,
     "hashedPassword" TEXT,
     "role" TEXT NOT NULL DEFAULT 'USER',
