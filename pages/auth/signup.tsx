@@ -1,14 +1,20 @@
 import { useRouter } from "next/router"
+import { BlitzPage } from "@blitzjs/next"
+import { Container } from "@mui/material"
+
 import Layout from "app/core/layouts/Layout"
-import { SignupForm } from "app/auth/components/SignupForm/SignupForm"
-import { BlitzPage, Routes } from "@blitzjs/next"
+import SignupForm from "app/auth/components/SignupForm/SignUp"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
 
+  const handleNavigateToHome = () => router.push("/")
+
   return (
     <Layout title="Sign Up">
-      <SignupForm onSuccess={() => router.push(Routes.Home())} />
+      <Container maxWidth="sm">
+        <SignupForm onSuccess={handleNavigateToHome} />
+      </Container>
     </Layout>
   )
 }

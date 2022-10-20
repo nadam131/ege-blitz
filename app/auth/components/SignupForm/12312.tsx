@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form"
-import { DevTool } from "@hookform/devtools"
 import { useMutation } from "@blitzjs/rpc"
 import { Button, Paper } from "@mui/material"
 
@@ -40,7 +39,7 @@ const examsOptions: { label: string; value: Exams }[] = [
   },
 ]
 
-export const SignupForm = () => {
+const SignupForm = () => {
   const methods = useForm<IFormInput>({ defaultValues })
   const [signupMutation] = useMutation(signup)
   const { handleSubmit, getValues, reset, control, setValue, watch } = methods
@@ -75,7 +74,7 @@ export const SignupForm = () => {
       <FormInputText name="age" control={control} label="Age" />
       <FormInputText name="password" control={control} type="password" label="Password" />
       <FormInputRadio name="exam" control={control} label={"Exam"} options={examsOptions} />
-      <DevTool control={control} />
+
       <Button onClick={onSubmit} variant="contained">
         Submit
       </Button>

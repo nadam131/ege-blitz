@@ -1,14 +1,13 @@
 import { useState, ReactNode, PropsWithoutRef } from "react"
 import { FormProvider, useForm, UseFormProps } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { DevTool } from "@hookform/devtools"
 import { Button } from "@mui/material"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
-  /** All your form fields */
   children?: ReactNode
-  /** Text to display in the submit button */
   submitText?: string
   schema?: S
   onSubmit: (values: z.infer<S>) => Promise<void | OnSubmitResult>
@@ -31,53 +30,57 @@ export function Form<S extends z.ZodType<any, any>>({
   ...props
 }: FormProps<S>) {
   const ctx = useForm<z.infer<S>>({
-    mode: "onBlur",
+    mode: "all",
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: initialValues,
   })
   const [formError, setFormError] = useState<string | null>(null)
+  const {
+    formState: { isValid, isSubmitting },
+  } = ctx
 
+  const isSubmitDisabled = !isValid || isSubmitting
   return (
-    <FormProvider {...ctx}>
-      <form
-        onSubmit={ctx.handleSubmit(async (values) => {
-          const result = (await onSubmit(values)) || {}
-          for (const [key, value] of Object.entries(result)) {
-            if (key === FORM_ERROR) {
-              setFormError(value)
-            } else {
-              ctx.setError(key as any, {
-                type: "submit",
-                message: value,
-              })
+    <>
+      <FormProvider {...ctx}>
+        <form
+          onSubmit={ctx.handleSubmit(async (values) => {
+            const result = (await onSubmit(values)) || {}
+            for (const [key, value] of Object.entries(result)) {
+              if (key === FORM_ERROR) {
+                setFormError(value)
+              } else {
+                ctx.setError(key as any, {
+                  type: "submit",
+                  message: value,
+                })
+              }
             }
-          }
-        })}
-        className="form"
-        {...props}
-      >
-        {/* Form fields supplied as children are rendered here */}
-        {children}
-
-        {formError && (
-          <div role="alert" style={{ color: "red" }}>
-            {formError}
-          </div>
-        )}
-
-        {submitText && (
-          <Button
-            variant="contained"
-            size="large"
-            fullWidth
-            type="submit"
-            disabled={ctx.formState.isSubmitting}
-          >
-            {submitText}
-          </Button>
-        )}
-      </form>
-    </FormProvider>
+          })}
+          className="form"
+          {...props}
+        >
+          {children}
+          {formError && (
+            <div role="alert" style={{ color: "red" }}>
+              {formError}
+            </div>
+          )}
+          {submitText && (
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth
+              type="submit"
+              disabled={isSubmitDisabled}
+            >
+              {submitText}
+            </Button>
+          )}
+        </form>
+        <DevTool control={ctx.control} />
+      </FormProvider>
+    </>
   )
 }
 
