@@ -1,44 +1,42 @@
 import { FC } from "react"
-import { useMutation } from "@blitzjs/rpc"
 import { AuthenticationError } from "blitz"
+import { useMutation } from "@blitzjs/rpc"
+import { Routes } from "@blitzjs/next"
+import Link from "next/link"
 import { Paper } from "@mui/material"
 
 import { Form, FORM_ERROR } from "app/core/components/Form"
-import login from "app/auth/mutations/login"
+import forgotPassword from "app/auth/mutations/forgotPassword"
 
-import { LoginSchema } from "./validation"
+import { ForgotPasswordSchema } from "./validation"
 import { Fields } from "."
-import Link from "next/link"
-import { Routes } from "@blitzjs/next"
 
-export interface LoginFormFields {
+export interface ForgotPasswordFormFields {
   email: string
-  password: string
 }
 
-type LoginFormProps = {
-  onSuccess?: (_user: any) => any
+type ForgotPasswordFormProps = {
+  onSubmit?: any
 }
 
-const INITIAL_VALUES: LoginFormFields = {
+const INITIAL_VALUES: ForgotPasswordFormFields = {
   email: "",
-  password: "",
 }
 
-export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
-  const [loginMutation] = useMutation(login)
+export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) => {
+  const [forgotMutation] = useMutation(forgotPassword)
 
   return (
     <Paper elevation={3} sx={{ padding: 4 }}>
       <h1>Login</h1>
       <Form
-        submitText="Login"
-        schema={LoginSchema}
+        submitText="Reset Password"
+        schema={ForgotPasswordSchema}
         initialValues={INITIAL_VALUES}
         onSubmit={async (values) => {
           try {
-            const user = await loginMutation(values)
-            onSuccess?.(user)
+            await forgotMutation(values)
+            onSubmit?.()
           } catch (error: any) {
             if (error instanceof AuthenticationError) {
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
@@ -52,15 +50,12 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
         }}
       >
         <Fields />
-        <Link href={Routes.ForgotPasswordPage()}>
-          <a>Forgot your password?</a>
-        </Link>
         <Link href={Routes.SignupPage()}>
-          <a>Sign Up?</a>
+          <a>Sign In?</a>
         </Link>
       </Form>
     </Paper>
   )
 }
 
-export default LoginForm
+export default ForgotPasswordForm

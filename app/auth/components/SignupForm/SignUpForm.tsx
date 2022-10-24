@@ -7,6 +7,8 @@ import signup from "app/auth/mutations/signup"
 
 import { SignupSchema } from "./validation"
 import { Fields } from "."
+import Link from "next/link"
+import { Routes } from "@blitzjs/next"
 
 export type Exams = "ege" | "oge"
 
@@ -57,6 +59,9 @@ export const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
         }}
       >
         <Fields />
+        <Link href={Routes.LoginPage()}>
+          <a>Log In?</a>
+        </Link>
       </Form>
     </Paper>
   )
