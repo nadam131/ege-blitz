@@ -3,22 +3,20 @@ import { useMutation } from "@blitzjs/rpc"
 import { Paper } from "@mui/material"
 
 import { Form, FORM_ERROR } from "app/core/components/Form"
+import signup from "app/auth/mutations/signup"
 
-import signup from "../../mutations/signup"
 import { SignupSchema } from "./validation"
 import { Fields } from "."
-import { DevTool } from "@hookform/devtools"
 
-type Exams = "ege" | "oge"
+export type Exams = "ege" | "oge"
 
 export interface SignUpFormFields {
   firstName: string
   lastName: string
-  //   nickName: string
-  //   email: string
-  //   age: string
-  //   exam: Exams
-  //   password: string
+  nickName: string
+  email: string
+  exam: Exams
+  password: string
 }
 
 type SignupFormProps = {
@@ -28,11 +26,10 @@ type SignupFormProps = {
 const INITIAL_VALUES: SignUpFormFields = {
   firstName: "",
   lastName: "",
-  //   email: "",
-  //   nickName: "",
-  //   password: "",
-  //   age: "",
-  //   exam: "ege",
+  email: "",
+  nickName: "",
+  password: "",
+  exam: "oge",
 }
 
 export const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
@@ -59,7 +56,7 @@ export const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
           }
         }}
       >
-        <Fields defaultValues={INITIAL_VALUES} />
+        <Fields />
       </Form>
     </Paper>
   )

@@ -3,7 +3,7 @@ import { FormProvider, useForm, UseFormProps } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DevTool } from "@hookform/devtools"
-import { Button } from "@mui/material"
+import { Button, Stack } from "@mui/material"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
@@ -60,23 +60,25 @@ export function Form<S extends z.ZodType<any, any>>({
           className="form"
           {...props}
         >
-          {children}
-          {formError && (
-            <div role="alert" style={{ color: "red" }}>
-              {formError}
-            </div>
-          )}
-          {submitText && (
-            <Button
-              variant="contained"
-              size="large"
-              fullWidth
-              type="submit"
-              disabled={isSubmitDisabled}
-            >
-              {submitText}
-            </Button>
-          )}
+          <Stack spacing={2}>
+            {children}
+            {formError && (
+              <div role="alert" style={{ color: "red" }}>
+                {formError}
+              </div>
+            )}
+            {submitText && (
+              <Button
+                variant="contained"
+                size="large"
+                fullWidth
+                type="submit"
+                disabled={isSubmitDisabled}
+              >
+                {submitText}
+              </Button>
+            )}
+          </Stack>
         </form>
         <DevTool control={ctx.control} />
       </FormProvider>

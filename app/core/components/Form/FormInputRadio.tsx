@@ -4,9 +4,8 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mu
 
 import { FormInputProps } from "./FormInputText"
 
-export const FormInputRadio: FC<FormInputProps & { options: any }> = ({
+export const FormInputRadio: FC<FormInputProps & { options: any; label: string }> = ({
   name,
-  control,
   label,
   options,
 }) => {
@@ -22,11 +21,10 @@ export const FormInputRadio: FC<FormInputProps & { options: any }> = ({
   }
 
   return (
-    <FormControl component="fieldset">
-      <FormLabel component="legend">{label}</FormLabel>
+    <FormControl>
+      <FormLabel>{label}</FormLabel>
       <Controller
         name={name}
-        control={control}
         render={({ field: { onChange, value }, fieldState: { error }, formState }) => (
           <RadioGroup value={value} onChange={onChange}>
             {generateRadioOptions()}

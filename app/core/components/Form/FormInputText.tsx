@@ -5,19 +5,15 @@ import { TextField, TextFieldProps } from "@mui/material"
 
 export interface FormInputProps {
   name: string
-  label: string
-  control?: any
-  setValue?: any
 }
 
-export const FormInputText: FC<TextFieldProps & FormInputProps> = ({ name, control, ...props }) => {
-  console.log(control, "control")
-  console.log(name, "name")
+export const FormInputText: FC<TextFieldProps & FormInputProps> = ({ name, ...props }) => {
   return (
     <Controller
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <TextField
+          variant="filled"
           name={name}
           inputProps={{
             autoComplete: "new-password",

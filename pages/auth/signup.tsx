@@ -3,7 +3,7 @@ import { BlitzPage } from "@blitzjs/next"
 import { Container } from "@mui/material"
 
 import Layout from "app/core/layouts/Layout"
-import SignupForm from "app/auth/components/SignupForm/SignUp"
+import SignupForm from "app/auth/components/SignupForm/SignUpForm"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
