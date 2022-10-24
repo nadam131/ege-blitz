@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { useMutation } from "@blitzjs/rpc"
-import { AuthenticationError } from "blitz"
+import { useRouterQuery } from "@blitzjs/next"
 import { Paper } from "@mui/material"
 
 import { Form, FORM_ERROR } from "app/core/components/Form"
@@ -8,8 +8,6 @@ import resetPassword from "app/auth/mutations/resetPassword"
 
 import { ResetPasswordSchema } from "./validation"
 import { Fields } from "."
-import { useRouter } from "next/router"
-import { useRouterQuery } from "@blitzjs/next"
 
 export interface ResetPasswordFormFields {
   password: string

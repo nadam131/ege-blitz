@@ -28,7 +28,7 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) =>
 
   return (
     <Paper elevation={3} sx={{ padding: 4 }}>
-      <h1>Login</h1>
+      <h1>Forgot Password</h1>
       <Form
         submitText="Reset Password"
         schema={ForgotPasswordSchema}
@@ -38,6 +38,7 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) =>
             await forgotMutation(values)
             onSubmit?.()
           } catch (error: any) {
+            console.log(error, "error")
             if (error instanceof AuthenticationError) {
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
             } else {

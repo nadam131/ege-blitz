@@ -11,7 +11,7 @@ const ForgotPasswordPage: BlitzPage = () => {
   const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
 
   return (
-    <Layout title="Log Up">
+    <Layout title="Forgot Password">
       <Container maxWidth="sm">
         <ForgotPasswordForm
           onSubmit={async (values) => {
