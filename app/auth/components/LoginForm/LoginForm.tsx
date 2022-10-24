@@ -1,5 +1,6 @@
 import { FC } from "react"
 import { useMutation } from "@blitzjs/rpc"
+import { AuthenticationError } from "blitz"
 import { Paper } from "@mui/material"
 
 import { Form, FORM_ERROR } from "app/core/components/Form"
@@ -35,13 +36,15 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
         onSubmit={async (values) => {
           try {
             const user = await loginMutation(values)
-
             onSuccess?.(user)
           } catch (error: any) {
-            if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-              return { email: "This email is already being used" }
+            if (error instanceof AuthenticationError) {
+              return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
             } else {
-              return { [FORM_ERROR]: error.toString() }
+              return {
+                [FORM_ERROR]:
+                  "Sorry, we had an unexpected error. Please try again. - " + error.toString(),
+              }
             }
           }
         }}

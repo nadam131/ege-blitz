@@ -4,7 +4,6 @@ export const email = z
   .string()
   .email()
   .transform((str) => str.toLowerCase().trim())
-  .optional()
 
 export const password = z
   .string()
@@ -18,16 +17,6 @@ export const lastName = z.string().min(1).max(50)
 export const nickName = z.string().min(1).max(50).optional()
 export const age = z.string().optional()
 export const exam = z.enum(["ege", "oge"]).optional()
-
-export const Signup = z.object({
-  // email,
-  firstName,
-  lastName,
-  // nickName,
-  // age,
-  // exam,
-  // password,
-})
 
 export const Login = z.object({
   email,
