@@ -10,7 +10,6 @@ export const password = z
   .min(10)
   .max(100)
   .transform((str) => str.trim())
-  .optional()
 
 export const firstName = z.string().min(1).max(50)
 export const lastName = z.string().min(1).max(50)

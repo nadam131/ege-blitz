@@ -22,7 +22,7 @@ export default resolver.pipe(
       throw error
     }
 
-    const hashedPassword = await SecurePassword.hash(newPassword.trim())
+    const hashedPassword = await SecurePassword.hash(newPassword?.trim())
     await db.user.update({
       where: { id: user.id },
       data: { hashedPassword },
