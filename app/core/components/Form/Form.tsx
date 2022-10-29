@@ -36,10 +36,12 @@ export function Form<S extends z.ZodType<any, any>>({
   })
   const [formError, setFormError] = useState<string | null>(null)
   const {
-    formState: { isValid, isSubmitting },
+    formState: { isValid, isDirty, isSubmitting },
   } = ctx
 
-  const isSubmitDisabled = !isValid || isSubmitting
+  console.log(isDirty, "isDirty")
+
+  const isSubmitDisabled = !isValid || isSubmitting || !isDirty
   return (
     <>
       <FormProvider {...ctx}>

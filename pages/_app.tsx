@@ -4,6 +4,7 @@ import React from "react"
 import { withBlitz } from "app/blitz-client"
 import { LoginForm } from "app/auth/components/LoginForm"
 import { useRouter } from "next/router"
+import { CssBaseline } from "@mui/material"
 
 function RootErrorFallback({ error }: ErrorFallbackProps) {
   const router = useRouter()
@@ -36,9 +37,12 @@ function RootErrorFallback({ error }: ErrorFallbackProps) {
 function MyApp({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
   return (
-    <ErrorBoundary FallbackComponent={RootErrorFallback}>
-      {getLayout(<Component {...pageProps} />)}
-    </ErrorBoundary>
+    <>
+      <CssBaseline />
+      <ErrorBoundary FallbackComponent={RootErrorFallback}>
+        {getLayout(<Component {...pageProps} />)}
+      </ErrorBoundary>
+    </>
   )
 }
 

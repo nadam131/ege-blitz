@@ -6,7 +6,7 @@ import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
 import { useMutation } from "@blitzjs/rpc"
 import { Routes, BlitzPage } from "@blitzjs/next"
-import { Dashboard } from "app/core/layouts/Dashboard"
+import { Dashboard } from "app/core/layouts/Dashboard/Dashboard"
 
 // const UserInfo = () => {
 //   const currentUser = useCurrentUser()
@@ -53,6 +53,6 @@ const Home: BlitzPage = () => {
 }
 
 Home.authenticate = true
-Home.redirectAuthenticatedTo = "/users"
+Home.redirectAuthenticatedTo = "/profile"
 
 export default Home
