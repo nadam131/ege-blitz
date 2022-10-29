@@ -19,7 +19,6 @@ const drawerWidth = 200
 
 export const Dashboard = ({ title, children }) => {
   const [logoutMutation] = useMutation(logout)
-  console.log(title, "title")
 
   const handleLogOut = async () => {
     await logoutMutation()

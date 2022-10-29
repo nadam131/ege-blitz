@@ -1,9 +1,9 @@
-import { useState, ReactNode, PropsWithoutRef } from "react"
+import { useState, ReactNode, PropsWithoutRef, useEffect } from "react"
 import { FormProvider, useForm, UseFormProps } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DevTool } from "@hookform/devtools"
-import { Button, Stack } from "@mui/material"
+import { Alert, Button, Snackbar, Stack } from "@mui/material"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
@@ -35,13 +35,27 @@ export function Form<S extends z.ZodType<any, any>>({
     defaultValues: initialValues,
   })
   const [formError, setFormError] = useState<string | null>(null)
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false)
   const {
-    formState: { isValid, isDirty, isSubmitting },
+    getValues,
+    reset,
+    formState: { isValid, isDirty, isSubmitSuccessful, isSubmitting },
   } = ctx
 
   console.log(isDirty, "isDirty")
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset(getValues())
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
+      setShowSnackbar(true)
+    }
+  }, [isSubmitSuccessful, getValues, reset])
+
   const isSubmitDisabled = !isValid || isSubmitting || !isDirty
+
   return (
     <>
       <FormProvider {...ctx}>
@@ -82,6 +96,13 @@ export function Form<S extends z.ZodType<any, any>>({
             )}
           </Stack>
         </form>
+        {showSnackbar && (
+          <Snackbar open={true} autoHideDuration={2000} onClose={() => setShowSnackbar(false)}>
+            <Alert severity="success" sx={{ width: "100%" }}>
+              This is a success message!
+            </Alert>
+          </Snackbar>
+        )}
         <DevTool control={ctx.control} />
       </FormProvider>
     </>

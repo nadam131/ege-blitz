@@ -32,13 +32,9 @@ export const FormChangePassword = () => {
           schema={ChangePasswordSchema}
           initialValues={initialValues}
           onSubmit={async (values) => {
-            console.log(values, "values")
             try {
               const response = await passwordMutation(values)
-
-              console.log(response, "response")
             } catch (error) {
-              console.log(error.code, "error")
               if (error.code === "P2002" && error.meta?.target?.includes("nickName")) {
                 return { nickName: "This nickName is already being used" }
               } else {

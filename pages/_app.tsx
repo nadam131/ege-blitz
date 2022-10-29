@@ -4,34 +4,43 @@ import React from "react"
 import { withBlitz } from "app/blitz-client"
 import { LoginForm } from "app/auth/components/LoginForm"
 import { useRouter } from "next/router"
-import { CssBaseline } from "@mui/material"
+import { Box, Container, CssBaseline } from "@mui/material"
 
 function RootErrorFallback({ error }: ErrorFallbackProps) {
   const router = useRouter()
-  if (error instanceof AuthenticationError) {
-    return (
-      <LoginForm
-        onSuccess={(_user) => {
-          const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
-          return router.push(next)
-        }}
-      />
-    )
-  } else if (error instanceof AuthorizationError) {
-    return (
-      <ErrorComponent
-        statusCode={error.statusCode}
-        title="Sorry, you are not authorized to access this"
-      />
-    )
-  } else {
-    return (
-      <ErrorComponent
-        statusCode={(error as any)?.statusCode || 400}
-        title={error.message || error.name}
-      />
-    )
+
+  const renderError = () => {
+    if (error instanceof AuthenticationError) {
+      return (
+        <LoginForm
+          onSuccess={(_user) => {
+            const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
+            return router.push(next)
+          }}
+        />
+      )
+    } else if (error instanceof AuthorizationError) {
+      return (
+        <ErrorComponent
+          statusCode={error.statusCode}
+          title="Sorry, you are not authorized to access this"
+        />
+      )
+    } else {
+      return (
+        <ErrorComponent
+          statusCode={(error as any)?.statusCode || 400}
+          title={error.message || error.name}
+        />
+      )
+    }
   }
+
+  return (
+    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Container maxWidth="sm">{renderError()}</Container>
+    </Box>
+  )
 }
 
 function MyApp({ Component, pageProps }: AppProps) {

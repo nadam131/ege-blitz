@@ -44,11 +44,8 @@ export const FormUserSettings = () => {
           schema={UserSettingsSchema}
           initialValues={initialValues}
           onSubmit={async (values) => {
-            console.log(values, "values")
-
             try {
               const response = await userMutation(values)
-              console.log(response, "response")
             } catch (error) {
               if (error.code === "P2002" && error.meta?.target?.includes("nickName")) {
                 return { nickName: "This nickName is already being used" }

@@ -38,7 +38,6 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) =>
             await forgotMutation(values)
             onSubmit?.()
           } catch (error: any) {
-            console.log(error, "error")
             if (error instanceof AuthenticationError) {
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
             } else {

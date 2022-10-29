@@ -1,6 +1,6 @@
 import { useMutation } from "@blitzjs/rpc"
 import { BlitzPage } from "@blitzjs/next"
-import { Container } from "@mui/material"
+import { Box, Container } from "@mui/material"
 
 import { ForgotPasswordForm } from "app/auth/components/ForgotPasswordForm"
 import Layout from "app/core/layouts/Layout"
@@ -12,19 +12,21 @@ const ForgotPasswordPage: BlitzPage = () => {
 
   return (
     <Layout title="Forgot Password">
-      <Container maxWidth="sm">
-        <ForgotPasswordForm
-          onSubmit={async (values) => {
-            try {
-              await forgotPasswordMutation(values)
-            } catch (error: any) {
-              return {
-                [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <Container maxWidth="sm">
+          <ForgotPasswordForm
+            onSubmit={async (values) => {
+              try {
+                await forgotPasswordMutation(values)
+              } catch (error: any) {
+                return {
+                  [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+                }
               }
-            }
-          }}
-        />
-      </Container>
+            }}
+          />
+        </Container>
+      </Box>
     </Layout>
   )
 }

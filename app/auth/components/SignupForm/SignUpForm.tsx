@@ -45,7 +45,6 @@ export const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
         schema={SignupSchema}
         initialValues={INITIAL_VALUES}
         onSubmit={async (values) => {
-          console.log(values, "values")
           try {
             await signupMutation(values)
             onSuccess?.()
