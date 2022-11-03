@@ -1,9 +1,6 @@
 import { z } from "zod"
 
-export const email = z
-  .string()
-  .email()
-  .transform((str) => str.toLowerCase().trim())
+import { email } from "app/validations"
 
 export const ForgotPasswordSchema = z.object({
   email,

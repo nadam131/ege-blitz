@@ -6,7 +6,7 @@ export const Fields = () => {
   return (
     <Box>
       <Stack spacing={2}>
-        <FormInputText label="Email" name="email" />
+        <FormInputText type="email" label="Email" name="email" />
         <FormInputText type="password" label="Password" name="password" />
         <Divider />
       </Stack>

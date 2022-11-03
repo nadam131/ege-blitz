@@ -4,6 +4,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DevTool } from "@hookform/devtools"
 import { Alert, Button, Snackbar, Stack } from "@mui/material"
+import { isEmpty } from "lodash"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
@@ -42,17 +43,15 @@ export function Form<S extends z.ZodType<any, any>>({
     formState: { isValid, isDirty, isSubmitSuccessful, isSubmitting },
   } = ctx
 
-  console.log(isDirty, "isDirty")
-
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset(getValues())
+    if (isSubmitSuccessful && isEmpty(formError)) {
+      reset()
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
       }
       setShowSnackbar(true)
     }
-  }, [isSubmitSuccessful, getValues, reset])
+  }, [isSubmitSuccessful, formError, getValues, reset])
 
   const isSubmitDisabled = !isValid || isSubmitting || !isDirty
 

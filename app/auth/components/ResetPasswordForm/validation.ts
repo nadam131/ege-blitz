@@ -1,10 +1,6 @@
 import { z } from "zod"
 
-export const password = z
-  .string()
-  .min(10)
-  .max(100)
-  .transform((str) => str.trim())
+import { password } from "app/validations"
 
 export const ResetPasswordSchema = z.object({
   password,
