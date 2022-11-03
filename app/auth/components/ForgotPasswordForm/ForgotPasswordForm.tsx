@@ -50,7 +50,7 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) =>
         }}
       >
         <Fields />
-        <Link href={Routes.SignupPage()}>
+        <Link href={Routes.LoginPage()}>
           <a>Sign In?</a>
         </Link>
       </Form>

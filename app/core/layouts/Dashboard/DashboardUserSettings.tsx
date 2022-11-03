@@ -1,6 +1,7 @@
 import { Grid, Paper, Stack } from "@mui/material"
 import { FormChangePassword } from "app/core/components/Form/FormChangePassword/FormChangePassword"
 import { FormUserSettings } from "app/core/components/Form/FormUserSettings/FormUserSettings"
+import { Suspense } from "react"
 
 export const DashboardUserSettings = () => {
   return (
@@ -13,7 +14,9 @@ export const DashboardUserSettings = () => {
           >
             <Stack spacing={3}>
               <h2>User Account Information</h2>
-              <FormUserSettings />
+              <Suspense fallback="Loading...">
+                <FormUserSettings />
+              </Suspense>
             </Stack>
           </Paper>
         </Grid>
@@ -24,7 +27,9 @@ export const DashboardUserSettings = () => {
           >
             <Stack spacing={3}>
               <h2>Change password</h2>
-              <FormChangePassword />
+              <Suspense fallback="Loading...">
+                <FormChangePassword />
+              </Suspense>
             </Stack>
           </Paper>
         </Grid>

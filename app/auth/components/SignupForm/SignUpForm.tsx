@@ -59,7 +59,7 @@ export const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
       >
         <Fields />
         <Link href={Routes.LoginPage()}>
-          <a>Log In?</a>
+          <a>Sign In?</a>
         </Link>
       </Form>
     </Paper>

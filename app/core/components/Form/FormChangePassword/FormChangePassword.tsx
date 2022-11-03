@@ -28,6 +28,7 @@ export const FormChangePassword = () => {
     <Box>
       <Stack spacing={4}>
         <Form
+          clearValues
           submitText="Change settings"
           schema={ChangePasswordSchema}
           initialValues={initialValues}

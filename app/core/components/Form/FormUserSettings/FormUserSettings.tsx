@@ -15,12 +15,6 @@ export interface UserSettingsFormFields {
   lastName: string
   nickName: string
   email: string
-  // exam: Exams
-  // password: string
-}
-
-type SignupFormProps = {
-  onSuccess?: () => void
 }
 
 export const FormUserSettings = () => {
@@ -32,8 +26,6 @@ export const FormUserSettings = () => {
     lastName: user?.lastName as string,
     email: user?.email as string,
     nickName: user?.nickName as string,
-    // password: "",
-    // exam: user?.exam as Exams,
   }
 
   return (
@@ -53,17 +45,6 @@ export const FormUserSettings = () => {
                 return { [FORM_ERROR]: error.toString() }
               }
             }
-
-            // try {
-            //   await signupMutation(values)
-            //   onSuccess?.()
-            // } catch (error: any) {
-            //   if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-            //     return { email: "This email is already being used" }
-            //   } else {
-            //     return { [FORM_ERROR]: error.toString() }
-            //   }
-            // }
           }}
         >
           <Fields />

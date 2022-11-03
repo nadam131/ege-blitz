@@ -10,6 +10,7 @@ export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
   children?: ReactNode
   submitText?: string
+  clearValues?: boolean
   schema?: S
   onSubmit: (values: z.infer<S>) => Promise<void | OnSubmitResult>
   initialValues?: UseFormProps<z.infer<S>>["defaultValues"]
@@ -27,6 +28,7 @@ export function Form<S extends z.ZodType<any, any>>({
   submitText,
   schema,
   initialValues,
+  clearValues,
   onSubmit,
   ...props
 }: FormProps<S>) {
@@ -45,13 +47,14 @@ export function Form<S extends z.ZodType<any, any>>({
 
   useEffect(() => {
     if (isSubmitSuccessful && isEmpty(formError)) {
-      reset()
+      clearValues ? reset() : reset(getValues())
+
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
       }
       setShowSnackbar(true)
     }
-  }, [isSubmitSuccessful, formError, getValues, reset])
+  }, [isSubmitSuccessful, clearValues, formError, getValues, reset])
 
   const isSubmitDisabled = !isValid || isSubmitting || !isDirty
 
