@@ -11,7 +11,15 @@ export const password = z
   .max(100)
   .transform((str) => str.trim())
 
-export const firstName = z.string().min(1).max(50)
-export const lastName = z.string().min(1).max(50)
-export const nickName = z.string().min(1).max(50)
+export const firstName = z
+  .string()
+  .regex(/^[A-Za-z]+$/)
+  .min(2)
+  .max(50)
+export const lastName = z
+  .string()
+  .regex(/^[A-Za-z]+$/)
+  .min(2)
+  .max(50)
+export const nickName = z.string().min(3).max(50)
 export const exam = z.enum(["ege", "oge"])
