@@ -3,7 +3,7 @@ import { AuthenticationError } from "blitz"
 import { useMutation } from "@blitzjs/rpc"
 import { Routes } from "@blitzjs/next"
 import Link from "next/link"
-import { Paper } from "@mui/material"
+import { Alert, AlertTitle, Paper } from "@mui/material"
 
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import forgotPassword from "app/auth/mutations/forgotPassword"
@@ -20,9 +20,14 @@ const INITIAL_VALUES: ForgotPasswordFormFields = {
 }
 
 export const ForgotPasswordForm: FC = () => {
-  const [forgotMutation] = useMutation(forgotPassword)
+  const [forgotMutation, { isSuccess }] = useMutation(forgotPassword)
 
-  return (
+  return isSuccess ? (
+    <Alert severity="success">
+      <AlertTitle>Success</AlertTitle>
+      Please, check your email for reset link and click it
+    </Alert>
+  ) : (
     <Paper elevation={3} sx={{ padding: 4 }}>
       <h1>Forgot Password</h1>
       <Form

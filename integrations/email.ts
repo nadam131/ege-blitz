@@ -12,8 +12,8 @@ export const sendEmail = async (email, subject, htmlContent) => {
     name: "Liftenok",
   }
 
-  tranEmailApi
-    .sendTransacEmail({
+  try {
+    await tranEmailApi.sendTransacEmail({
       sender,
       to: [
         {
@@ -26,6 +26,7 @@ export const sendEmail = async (email, subject, htmlContent) => {
         role: "Frontend",
       },
     })
-    .then(console.log)
-    .catch(console.log)
+  } catch {
+    console.log()
+  }
 }
