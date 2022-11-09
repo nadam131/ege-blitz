@@ -14,17 +14,7 @@ const ForgotPasswordPage: BlitzPage = () => {
     <Layout title="Forgot Password">
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
         <Container maxWidth="sm">
-          <ForgotPasswordForm
-            onSubmit={async (values) => {
-              try {
-                await forgotPasswordMutation(values)
-              } catch (error: any) {
-                return {
-                  [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
-                }
-              }
-            }}
-          />
+          <ForgotPasswordForm />
         </Container>
       </Box>
     </Layout>

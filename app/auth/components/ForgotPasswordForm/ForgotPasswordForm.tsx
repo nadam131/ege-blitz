@@ -15,15 +15,11 @@ export interface ForgotPasswordFormFields {
   email: string
 }
 
-type ForgotPasswordFormProps = {
-  onSubmit?: any
-}
-
 const INITIAL_VALUES: ForgotPasswordFormFields = {
   email: "",
 }
 
-export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) => {
+export const ForgotPasswordForm: FC = () => {
   const [forgotMutation] = useMutation(forgotPassword)
 
   return (
@@ -36,7 +32,6 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({ onSubmit }) =>
         onSubmit={async (values) => {
           try {
             await forgotMutation(values)
-            onSubmit?.()
           } catch (error: any) {
             if (error instanceof AuthenticationError) {
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }

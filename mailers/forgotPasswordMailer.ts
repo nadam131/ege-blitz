@@ -5,13 +5,14 @@
  * and use it straight away.
  */
 
+import { sendEmail } from "integrations/email"
+
 type ResetPasswordMailer = {
   to: string
   token: string
 }
 
 export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
-  // In production, set APP_ORIGIN to your production server origin
   const origin = process.env.APP_ORIGIN || process.env.BLITZ_DEV_SERVER_ORIGIN
   const resetUrl = `${origin}/auth/reset-password?token=${token}`
 
@@ -21,8 +22,6 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
     subject: "Your Password Reset Instructions",
     html: `
       <h1>Reset Your Password</h1>
-      <h3>NOTE: You must set up a production email integration in mailers/forgotPasswordMailer.ts</h3>
-
       <a href="${resetUrl}">
         Click here to set a new password
       </a>
@@ -32,11 +31,8 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   return {
     async send() {
       if (process.env.NODE_ENV === "production") {
-        // TODO - send the production email, like this:
-        // await postmark.sendEmail(msg)
-        throw new Error("No production email implementation in mailers/forgotPasswordMailer")
+        await sendEmail(to, "Forgot Password", msg.html)
       } else {
-        // Preview email in the browser
         const previewEmail = (await import("preview-email")).default
         await previewEmail(msg)
       }
