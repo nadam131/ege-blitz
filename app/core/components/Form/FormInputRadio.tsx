@@ -25,7 +25,7 @@ export const FormInputRadio: FC<FormInputProps & { options: any; label: string }
       <FormLabel>{label}</FormLabel>
       <Controller
         name={name}
-        render={({ field: { onChange, value }, fieldState: { error }, formState }) => (
+        render={({ field: { onChange, value } }) => (
           <RadioGroup value={value} onChange={onChange}>
             {generateRadioOptions()}
           </RadioGroup>

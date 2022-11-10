@@ -1,14 +1,12 @@
-import { useSession } from "@blitzjs/auth"
+import { useMutation } from "@blitzjs/rpc"
 import { Box, Stack } from "@mui/material"
-import { Exams } from "app/auth/components/SignupForm"
+
 import { useCurrentUser } from "app/users/hooks/useCurrentUser"
-import React from "react"
 import Form, { FORM_ERROR } from "../Form"
 import { Fields } from "./Fields"
 import { UserSettingsSchema } from "./validation"
 
 import userSettings from "../../../../users/mutations/changeUserSettings"
-import { useMutation } from "@blitzjs/rpc"
 
 export interface UserSettingsFormFields {
   firstName: string
@@ -37,7 +35,7 @@ export const FormUserSettings = () => {
           initialValues={initialValues}
           onSubmit={async (values) => {
             try {
-              const response = await userMutation(values)
+              await userMutation(values)
             } catch (error) {
               if (error.code === "P2002" && error.meta?.target?.includes("nickName")) {
                 return { nickName: "This nickName is already being used" }

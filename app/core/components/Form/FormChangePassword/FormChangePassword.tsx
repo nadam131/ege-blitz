@@ -1,14 +1,11 @@
-import { useSession } from "@blitzjs/auth"
+import { useMutation } from "@blitzjs/rpc"
 import { Box, Stack } from "@mui/material"
-import { Exams } from "app/auth/components/SignupForm"
-import { useCurrentUser } from "app/users/hooks/useCurrentUser"
-import React from "react"
+
 import Form, { FORM_ERROR } from "../Form"
 import { Fields } from "./Fields"
 import { ChangePasswordSchema } from "./validation"
 
 import changePassword from "../../../../auth/mutations/changePassword"
-import { useMutation } from "@blitzjs/rpc"
 
 export interface ChangePasswordFormFields {
   currentPassword: string
@@ -17,7 +14,6 @@ export interface ChangePasswordFormFields {
 
 export const FormChangePassword = () => {
   const [passwordMutation] = useMutation(changePassword)
-  const user = useCurrentUser()
 
   const initialValues: ChangePasswordFormFields = {
     currentPassword: "",
@@ -34,7 +30,7 @@ export const FormChangePassword = () => {
           initialValues={initialValues}
           onSubmit={async (values) => {
             try {
-              const response = await passwordMutation(values)
+              await passwordMutation(values)
             } catch (error) {
               if (error.code === "P2002" && error.meta?.target?.includes("nickName")) {
                 return { nickName: "This nickName is already being used" }

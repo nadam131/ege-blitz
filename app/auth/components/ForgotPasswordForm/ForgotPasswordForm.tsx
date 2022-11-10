@@ -3,7 +3,7 @@ import { AuthenticationError } from "blitz"
 import { useMutation } from "@blitzjs/rpc"
 import { Routes } from "@blitzjs/next"
 import Link from "next/link"
-import { Alert, AlertTitle, Paper } from "@mui/material"
+import { Alert, AlertTitle, Divider, Paper } from "@mui/material"
 
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import forgotPassword from "app/auth/mutations/forgotPassword"
@@ -50,6 +50,7 @@ export const ForgotPasswordForm: FC = () => {
         }}
       >
         <Fields />
+        <Divider />
         <Link href={Routes.LoginPage()}>
           <a>Sign In?</a>
         </Link>

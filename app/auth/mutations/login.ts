@@ -10,7 +10,9 @@ export const authenticateUser = async (rawEmail: string, rawPassword: string) =>
   const user = await db.user.findFirst({ where: { email } })
   if (!user) throw new AuthenticationError()
 
-  const result = await SecurePassword.verify(user.hashedPassword, password)
+  const { hashedPassword, ...rest } = user
+
+  const result = await SecurePassword.verify(hashedPassword, password)
 
   if (result === SecurePassword.VALID_NEEDS_REHASH) {
     // Upgrade hashed password with a more secure hash
@@ -18,7 +20,6 @@ export const authenticateUser = async (rawEmail: string, rawPassword: string) =>
     await db.user.update({ where: { id: user.id }, data: { hashedPassword: improvedHash } })
   }
 
-  const { hashedPassword, ...rest } = user
   return rest
 }
 

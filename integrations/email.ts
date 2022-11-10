@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sib = require("sib-api-v3-sdk")
 
 export const sendEmail = async (email, subject, htmlContent) => {

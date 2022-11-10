@@ -8,7 +8,7 @@ export default {
   component: Fields,
 } as ComponentMeta<typeof Fields>
 
-const Template: ComponentStory<typeof Fields> = (args) => <Fields />
+const Template: ComponentStory<typeof Fields> = () => <Fields />
 
 export const Default = Template.bind({})
 Default.args = {}

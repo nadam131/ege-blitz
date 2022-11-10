@@ -30,7 +30,12 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
 
   return {
     async send() {
-      await sendEmail(to, "Forgot Password", msg.html)
+      if (process.env.NODE_ENV === "production") {
+        await sendEmail(to, "Forgot Password", msg.html)
+      } else {
+        const previewEmail = (await import("preview-email")).default
+        await previewEmail(msg)
+      }
     },
   }
 }
