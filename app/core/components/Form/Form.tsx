@@ -32,13 +32,14 @@ export function Form<S extends z.ZodType<any, any>>({
   onSubmit,
   ...props
 }: FormProps<S>) {
+  const [formError, setFormError] = useState<string | null>(null)
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false)
   const ctx = useForm<z.infer<S>>({
     mode: "all",
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: initialValues,
   })
-  const [formError, setFormError] = useState<string | null>(null)
-  const [showSnackbar, setShowSnackbar] = useState<boolean>(false)
+
   const {
     getValues,
     reset,

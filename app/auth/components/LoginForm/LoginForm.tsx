@@ -17,7 +17,7 @@ export interface LoginFormFields {
 }
 
 type LoginFormProps = {
-  onSuccess?: (_user: any) => any
+  onSuccess?: () => void
 }
 
 const INITIAL_VALUES: LoginFormFields = {
@@ -37,8 +37,8 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
         initialValues={INITIAL_VALUES}
         onSubmit={async (values) => {
           try {
-            const user = await loginMutation(values)
-            onSuccess?.(user)
+            await loginMutation(values)
+            onSuccess?.()
           } catch (error: any) {
             if (error instanceof AuthenticationError) {
               return { [FORM_ERROR]: "Sorry, those credentials are invalid" }

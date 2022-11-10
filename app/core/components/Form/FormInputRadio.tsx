@@ -4,7 +4,12 @@ import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mu
 
 import { FormInputProps } from "./FormInputText"
 
-export const FormInputRadio: FC<FormInputProps & { options: any; label: string }> = ({
+interface RadioOption {
+  value: string
+  label: string
+}
+
+export const FormInputRadio: FC<FormInputProps & { options: RadioOption[]; label: string }> = ({
   name,
   label,
   options,

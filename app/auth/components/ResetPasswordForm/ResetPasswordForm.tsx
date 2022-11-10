@@ -13,15 +13,11 @@ export interface ResetPasswordFormFields {
   password: string
 }
 
-type ResetPasswordFormProps = {
-  onSuccess?: () => any
-}
-
 const INITIAL_VALUES: ResetPasswordFormFields = {
   password: "",
 }
 
-export const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSuccess }) => {
+export const ResetPasswordForm: FC = () => {
   const [resetMutation] = useMutation(resetPassword)
   const { token } = useRouterQuery()
 
@@ -39,7 +35,6 @@ export const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ onSuccess }) => 
               passwordConfirmation: values.password,
               token: token as string,
             })
-            onSuccess?.()
           } catch (error: any) {
             if (error.name === "ResetPasswordError") {
               return {

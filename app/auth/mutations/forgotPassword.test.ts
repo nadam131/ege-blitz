@@ -10,6 +10,7 @@ beforeEach(async () => {
 
 const generatedToken = "plain-token"
 jest.mock("@blitzjs/auth", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   ...jest.requireActual<Record<string, unknown>>("@blitzjs/auth")!,
   generateToken: () => generatedToken,
 }))
