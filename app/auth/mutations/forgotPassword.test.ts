@@ -3,6 +3,7 @@ import { hash256 } from "@blitzjs/auth"
 import forgotPassword from "./forgotPassword"
 import previewEmail from "preview-email"
 import { Ctx } from "@blitzjs/next"
+import { TEST_USER } from "test/constants"
 
 beforeEach(async () => {
   await db.$reset()
@@ -25,7 +26,7 @@ describe("forgotPassword mutation", () => {
     // Create test user
     const user = await db.user.create({
       data: {
-        email: "user@example.com",
+        ...TEST_USER,
         tokens: {
           // Create old token to ensure it's deleted
           create: {

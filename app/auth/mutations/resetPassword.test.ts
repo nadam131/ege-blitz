@@ -1,6 +1,8 @@
-import resetPassword from "./resetPassword"
 import db from "db"
 import { SecurePassword, hash256 } from "@blitzjs/auth"
+import { TEST_USER } from "test/constants"
+
+import resetPassword from "./resetPassword"
 
 beforeEach(async () => {
   await db.$reset()
@@ -26,7 +28,8 @@ describe("resetPassword mutation", () => {
 
     const user = await db.user.create({
       data: {
-        email: "user@example.com",
+        ...TEST_USER,
+        role: "USER",
         tokens: {
           // Create old token to ensure it's deleted
           create: [
@@ -45,7 +48,12 @@ describe("resetPassword mutation", () => {
           ],
         },
       },
-      include: { tokens: true },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        role: true,
+      },
     })
 
     const newPassword = "newPassword"

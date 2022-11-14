@@ -5,12 +5,13 @@ import { Paper } from "@mui/material"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 
-import { SignupSchema } from "./validation"
-import { Fields } from "."
 import Link from "next/link"
 import { Routes } from "@blitzjs/next"
 
-export type Exams = "ege" | "oge"
+import { Exams } from "app/types/exam"
+
+import { SignupSchema } from "./validation"
+import { Fields } from "."
 
 export interface SignUpFormFields {
   firstName: string
