@@ -15,10 +15,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"
 import { useMutation } from "@blitzjs/rpc"
 import logout from "app/auth/mutations/logout"
+import { useIsAdmin } from "app/hooks/useIsAdmin"
+import Link from "next/link"
 const drawerWidth = 200
 
 export const Dashboard = ({ title, children }) => {
   const [logoutMutation] = useMutation(logout)
+  const isAdmin = useIsAdmin()
 
   const handleLogOut = async () => {
     await logoutMutation()
@@ -41,14 +44,16 @@ export const Dashboard = ({ title, children }) => {
         <Toolbar />
         <Divider />
         <List>
-          <ListItem disablePadding>
-            <ListItemButton selected={true}>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profile Settings" />
-            </ListItemButton>
-          </ListItem>
+          <Link href={"/profile"}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Profile Settings" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
           <ListItem disablePadding>
             <ListItemButton onClick={handleLogOut}>
               <ListItemIcon>
@@ -59,6 +64,20 @@ export const Dashboard = ({ title, children }) => {
           </ListItem>
         </List>
         <Divider />
+        {isAdmin && (
+          <List>
+            <Link href={"/users"}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Users" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          </List>
+        )}
       </Drawer>
       <Box>
         <AppBar position="sticky" sx={{ ml: `${drawerWidth}px` }}>

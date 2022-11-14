@@ -1,5 +1,6 @@
 import { SecurePassword } from "@blitzjs/auth"
 import { resolver } from "@blitzjs/rpc"
+import { USER_ROLE } from "app/constants/user"
 import db from "db"
 import { Role } from "types"
 import { SignupSchema } from "../components/SignupForm"
@@ -16,7 +17,7 @@ export default resolver.pipe(
         email: email.toLowerCase().trim(),
         exam,
         hashedPassword,
-        role: "USER",
+        role: USER_ROLE.USER,
       },
       select: {
         id: true,

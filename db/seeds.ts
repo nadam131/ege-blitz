@@ -1,4 +1,9 @@
-// import db from "./index"
+import { SecurePassword } from "@blitzjs/auth"
+import Chance from "chance"
+
+import { ADMIN_USER } from "app/constants/user"
+
+import db from "./index"
 
 /*
  * This seed function is executed when you run `blitz db seed`.
@@ -7,9 +12,40 @@
  * to easily generate realistic data.
  */
 const seed = async () => {
-  // for (let i = 0; i < 5; i++) {
-  //   await db.project.create({ data: { name: "Project " + i } })
-  // }
+  const adminPassword = await SecurePassword.hash("misha-sushi")
+
+  await db.user.create({
+    data: { ...ADMIN_USER, hashedPassword: adminPassword },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      role: true,
+    },
+  })
+
+  for (let index = 0; index < 15; index++) {
+    const chance = new Chance()
+
+    const randomUser = {
+      firstName: chance.first(),
+      lastName: chance.last(),
+      nickName: chance.name(),
+      email: chance.email(),
+      exam: chance.pickone(["ege", "oge"]),
+      hashedPassword: "123123",
+    }
+
+    await db.user.create({
+      data: randomUser,
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        role: true,
+      },
+    })
+  }
 }
 
 export default seed
