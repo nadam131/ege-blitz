@@ -1,7 +1,7 @@
 import { SecurePassword } from "@blitzjs/auth"
 import Chance from "chance"
 
-import { ADMIN_USER } from "app/constants/user"
+import { ADMIN_USER, USER_ROLE } from "app/constants/user"
 
 import db from "./index"
 
@@ -14,30 +14,12 @@ import db from "./index"
 const seed = async () => {
   const adminPassword = await SecurePassword.hash("misha-sushi")
 
-  await db.user.create({
-    data: { ...ADMIN_USER, hashedPassword: adminPassword },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      role: true,
-    },
-  })
+  const hasAdmin = !!(await db.user.findFirst({ where: { role: USER_ROLE.ADMIN } }))
+  const hasUsers = !!(await db.user.findMany({ where: { role: USER_ROLE.USER } }))
 
-  for (let index = 0; index < 15; index++) {
-    const chance = new Chance()
-
-    const randomUser = {
-      firstName: chance.first(),
-      lastName: chance.last(),
-      nickName: chance.name(),
-      email: chance.email(),
-      exam: chance.pickone(["ege", "oge"]),
-      hashedPassword: "123123",
-    }
-
+  if (!hasAdmin) {
     await db.user.create({
-      data: randomUser,
+      data: { ...ADMIN_USER, hashedPassword: adminPassword },
       select: {
         id: true,
         firstName: true,
@@ -45,6 +27,31 @@ const seed = async () => {
         role: true,
       },
     })
+  }
+
+  if (!hasUsers) {
+    for (let index = 0; index < 15; index++) {
+      const chance = new Chance()
+
+      const randomUser = {
+        firstName: chance.first(),
+        lastName: chance.last(),
+        nickName: chance.name(),
+        email: chance.email(),
+        exam: chance.pickone(["ege", "oge"]),
+        hashedPassword: "123123",
+      }
+
+      await db.user.create({
+        data: randomUser,
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          role: true,
+        },
+      })
+    }
   }
 }
 
