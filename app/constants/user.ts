@@ -14,6 +14,8 @@ export const ADMIN_USER = {
   role: USER_ROLE.ADMIN,
 }
 
+export const TEST_PASSWORD = "12345678910"
+
 export const TEST_USER = {
   firstName: "Nikita",
   lastName: "Adamov",

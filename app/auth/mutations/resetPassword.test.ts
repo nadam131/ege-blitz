@@ -1,9 +1,8 @@
 import db from "db"
 import { SecurePassword, hash256 } from "@blitzjs/auth"
-import { TEST_USER } from "test/constants"
 
 import resetPassword from "./resetPassword"
-import { USER_ROLE } from "app/constants/user"
+import { createTestUser } from "test/utils/createTestUser"
 
 beforeEach(async () => {
   await db.$reset()
@@ -27,10 +26,8 @@ describe("resetPassword mutation", () => {
     const past = new Date()
     past.setHours(past.getHours() - 4)
 
-    const user = await db.user.create({
+    const user = await createTestUser(db, {
       data: {
-        ...TEST_USER,
-        role: USER_ROLE.USER,
         tokens: {
           // Create old token to ensure it's deleted
           create: [
