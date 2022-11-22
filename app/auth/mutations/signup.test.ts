@@ -1,5 +1,4 @@
 import db from "db"
-import { SecurePassword } from "@blitzjs/auth"
 import { TEST_PASSWORD, TEST_USER } from "app/constants/user"
 
 import signup from "./signup"

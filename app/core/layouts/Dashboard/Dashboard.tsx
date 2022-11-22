@@ -1,40 +1,23 @@
-import {
-  AppBar,
-  Box,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from "@mui/material"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import ExitToAppIcon from "@mui/icons-material/ExitToApp"
-import { useMutation } from "@blitzjs/rpc"
-import logout from "app/auth/mutations/logout"
+import { AppBar, Box, Divider, Drawer, Toolbar, Typography } from "@mui/material"
+
 import { useIsAdmin } from "app/hooks/useIsAdmin"
-import Link from "next/link"
-const drawerWidth = 200
+import { NavAdmin } from "app/core/components/Nav/NavAdmin/NavAdmin"
+import { NavMain } from "app/core/components/Nav/NavMain/NavMain"
+import { NavTasks } from "app/core/components/Nav/NavTasks/NavTasks"
+
+const DRAWER_WIDTH = 200
 
 export const Dashboard = ({ title, children }) => {
-  const [logoutMutation] = useMutation(logout)
   const isAdmin = useIsAdmin()
-
-  const handleLogOut = async () => {
-    await logoutMutation()
-  }
 
   return (
     <>
       <Drawer
         sx={{
-          width: drawerWidth,
+          width: DRAWER_WIDTH,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: drawerWidth,
+            width: DRAWER_WIDTH,
             boxSizing: "border-box",
           },
         }}
@@ -43,51 +26,21 @@ export const Dashboard = ({ title, children }) => {
       >
         <Toolbar />
         <Divider />
-        <List>
-          <Link href={"/profile"}>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <AccountCircleIcon />
-                </ListItemIcon>
-                <ListItemText primary="Profile Settings" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          <ListItem disablePadding>
-            <ListItemButton onClick={handleLogOut}>
-              <ListItemIcon>
-                <ExitToAppIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItemButton>
-          </ListItem>
-        </List>
+        <NavTasks />
         <Divider />
-        {isAdmin && (
-          <List>
-            <Link href={"/users"}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <AccountCircleIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Users" />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          </List>
-        )}
+        <NavMain />
+        <Divider />
+        {isAdmin && <NavAdmin />}
       </Drawer>
       <Box>
-        <AppBar position="sticky" sx={{ ml: `${drawerWidth}px` }}>
+        <AppBar position="sticky" sx={{ ml: `${DRAWER_WIDTH}px` }}>
           <Toolbar>
             <Typography variant="h6" noWrap component="div">
               {title}
             </Typography>
           </Toolbar>
         </AppBar>
-        <Box p={3} sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
+        <Box p={3} sx={{ width: `calc(100% - ${DRAWER_WIDTH}px)`, ml: `${DRAWER_WIDTH}px` }}>
           {children}
         </Box>
       </Box>

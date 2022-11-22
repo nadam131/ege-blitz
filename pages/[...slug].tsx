@@ -5,6 +5,14 @@ import { Dashboard } from "app/core/layouts/Dashboard/Dashboard"
 import { DashboardUserSettings } from "app/core/layouts/Dashboard/DashboardUserSettings"
 import { DashboardUsers } from "app/core/layouts/Dashboard/DashboardUsers"
 
+const CATEGORIES = {
+  reading: "Reading",
+}
+
+const TASKS = {
+  3: "Задание 3",
+}
+
 const PAGES = {
   profile: {
     title: "Profile Settings",
@@ -14,6 +22,10 @@ const PAGES = {
     title: "Users",
     children: <DashboardUsers />,
   },
+  exam: {
+    title: "Title of Exam",
+    children: () => "render exam",
+  },
 }
 
 const DashboardPage = () => {
@@ -22,6 +34,17 @@ const DashboardPage = () => {
   } = useRouter()
 
   if (isEmpty(slug)) return
+
+  if (["oge", "ege"].includes(slug?.[0] as string)) {
+    return (
+      <Dashboard
+        {...PAGES["exam"]}
+        title={`${slug?.[0]?.toUpperCase() as string} / ${CATEGORIES[slug?.[1] as string]} / ${
+          TASKS[slug?.[2] as string]
+        }`}
+      />
+    )
+  }
 
   return <Dashboard {...PAGES[slug?.[0] as string]} />
 }
