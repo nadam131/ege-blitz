@@ -3,6 +3,7 @@ import { FormChangePassword } from "app/core/components/Form/FormChangePassword/
 import { FormUserSettings } from "app/core/components/Form/FormUserSettings/FormUserSettings"
 import { Suspense } from "react"
 
+// TODO Убрать в другое место
 export const DashboardUserSettings = () => {
   return (
     <Stack direction="row" spacing={4}>

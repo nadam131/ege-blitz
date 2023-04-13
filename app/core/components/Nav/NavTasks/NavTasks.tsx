@@ -35,9 +35,9 @@ export const NavTasks = () => {
             <ListSubheader component="div" id="nested-list-subheader">
               Чтение
             </ListSubheader>
-            <Link href="/ege/reading/3">
+            <Link href="/ege/reading/ege-12-18">
               <ListItemButton>
-                <ListItemText primary="Задание 3" />
+                <ListItemText primary="Задания 12–18" />
               </ListItemButton>
             </Link>
           </List>

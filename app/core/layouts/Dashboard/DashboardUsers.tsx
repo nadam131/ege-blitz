@@ -4,6 +4,7 @@ import { TableUsers } from "app/core/components/Table/TableUsers/TableUsers"
 import { User } from "app/types/user"
 import { useUsers } from "app/users/hooks/useUsers"
 
+// TODO Убрать в другое место
 export const DashboardUsers = () => {
   const users = useUsers()
 
